@@ -15,4 +15,8 @@ class MainViewModel : ViewModel() {
         return Repository.getAllUsers(context)
     }
 
+    fun delete(context: Context, user: User) {
+        Repository.delete(context,user)
+    }
+
 }

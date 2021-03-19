@@ -30,6 +30,12 @@ class Repository {
             return database!!.getDao().getAllUsers()
         }
 
+        fun delete(context: Context,user: User){
+            database = getDatabase(context)
+            CoroutineScope(IO).launch {
+                database!!.getDao().delete(user)
+            }
+        }
 
     }
 

@@ -6,13 +6,14 @@ import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.room.adapter.ClickListener
 import com.example.room.adapter.MyAdapter
 import com.example.room.data.MainViewModel
 import com.example.room.database.User
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.ArrayList
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), ClickListener {
 
     private lateinit var viewModel: MainViewModel
     private lateinit var myAdapter: MyAdapter
@@ -21,7 +22,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        myAdapter = MyAdapter(this, ArrayList<User>())
+        myAdapter = MyAdapter(this, ArrayList<User>(), this)
 
         recycler_view.apply {
             setHasFixedSize(true)
@@ -48,5 +49,9 @@ class MainActivity : AppCompatActivity() {
 
         }
 
+    }
+
+    override fun onClick(user: User) {
+        viewModel.delete(applicationContext, user)
     }
 }

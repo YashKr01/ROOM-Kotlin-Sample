@@ -5,11 +5,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.cardview.widget.CardView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.example.room.R
 import com.example.room.database.User
 
-class MyAdapter(private val context: Context, private var userList: List<User>) :
+class MyAdapter(
+    private val context: Context,
+    private var userList: List<User>,
+    private val listener: ClickListener
+) :
     RecyclerView.Adapter<MyAdapter.MyViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -24,6 +30,9 @@ class MyAdapter(private val context: Context, private var userList: List<User>) 
         val user: User = userList[position]
         holder.name.text = user.name
         holder.email.text = user.email
+        holder.item.setOnClickListener {
+            listener.onClick(user)
+        }
     }
 
     fun setData(userList: List<User>) {
@@ -34,6 +43,7 @@ class MyAdapter(private val context: Context, private var userList: List<User>) 
     inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var name: TextView = itemView.findViewById(R.id.item_name)
         var email: TextView = itemView.findViewById(R.id.item_email)
+        var item: CardView = itemView.findViewById(R.id.item)
     }
 
 }
